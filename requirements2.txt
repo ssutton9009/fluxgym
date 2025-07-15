@@ -1,8 +1,10 @@
-torch torchvision torchaudio                \  # PyTorch
+torch 
+torchvision 
+torchaudio                                   \  # PyTorch
 accelerate                                   \  # HF accelerate launcher
 safetensors                                  \  # safe-tensor format
-diffusers==0.28.0                                    \  # HD samplers + Flux scripts
-transformers==4.45.2                                 \  # text encoder
+diffusers==0.28.0                            \  # HD samplers + Flux scripts
+transformers==4.45.2                         \  # text encoder
 peft                                         \  # LoRA wrappers
 bitsandbytes                                 \  # 8-bit optimizers
 einops                                       \  # tensor rearrange (diffusers)
