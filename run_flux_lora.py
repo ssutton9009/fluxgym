@@ -110,7 +110,7 @@ def tag_with_wd14(
             character_threshold=0.85,
         )
         tags = list(dict.fromkeys(list(chars) + list(gen)))
-        print(f"{p.name} -> {len(tags)} tags: {', '.join(tags)}")
+        print(f"{p.name} -> {len(tags)} tags: {trigger}, {', '.join(tags)}")
         caption = ", ".join([trigger] + tags)
         p.with_suffix(".txt").write_text(caption)
 
