@@ -147,21 +147,6 @@ python app.py
 > Windows: `env/Scripts/activate`
 > Linux: `source env/bin/activate`
 
-### Command-line dataset prep
-
-Fluxgym ships with a small helper script to build a dataset and training script
-without starting the UI. The basic usage is:
-
-```bash
-python run_flux_lora_cli.py \
-  --raw-photos /path/to/images \
-  --trigger "my_token person" \
-  --sample-prompt "my_token person portrait"
-```
-
-This will create `dataset.toml`, `sample_prompts.txt` and `train.sh` in the
-current folder ready for training.
-
 ## 3. Install via Docker
 
 First clone Fluxgym and kohya-ss/sd-scripts:
