@@ -25,6 +25,7 @@ module.exports = {
       params: {
         venv: "env",
         message: [
+          "pip uninstall -y jax jaxlib flax || true",
           "pip uninstall -y diffusers[torch] torch torchaudio torchvision",
           "uv pip install -r requirements.txt",
           "uv pip install -U bitsandbytes"

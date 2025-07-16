@@ -27,6 +27,7 @@ RUN git clone -b sd3 https://github.com/kohya-ss/sd-scripts && \
 # Install main application dependencies
 COPY ./requirements.txt ./requirements.txt
 RUN pip install --no-cache-dir -r ./requirements.txt
+RUN pip uninstall -y jax jaxlib flax || true
 
 # Install Torch, Torchvision, and Torchaudio for CUDA 12.2
 RUN pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu122/torch_stable.html
