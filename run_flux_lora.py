@@ -8,7 +8,9 @@ from tqdm.auto import tqdm
 from imgutils.tagging import get_wd14_tags
 
 # --- 1) USER CONFIGURATION -------------------------------------------------
-RAW_PHOTOS = "/content/drive/MyDrive/Mira Arakai/Mira_URPMORXL/dataset/images/10_mira"  # noqa: E501
+RAW_PHOTOS = (
+    "/content/drive/MyDrive/Mira Arakai/Mira_URPMORXL/dataset/images/10_mira"
+)  # noqa: E501
 
 TRIGGER = "mira_arakai woman"  # your new trigger token
 RESOLUTION = 768
@@ -49,7 +51,6 @@ def resize_if_needed(src: Path, dst: Path, short: int = RESOLUTION) -> None:
 def write_sample_prompts(path: Path, prompts) -> None:
     """Write each prompt on a new line."""
     path.write_text("\n".join(prompts))
-
 
 # --- 3) PREP DATASET -------------------------------------------------------
 
@@ -113,24 +114,20 @@ def tag_with_wd14(
         caption = ", ".join([trigger] + tags)
         p.with_suffix(".txt").write_text(caption)
 
-
 # --- 4) BUILD TRAIN SCRIPT -------------------------------------------------
 
 
 def build_train_sh() -> None:
     sh = Path("train.sh")
-    train_py = Path(__file__).resolve().parent / "sd-scripts" / "flux_train_network.py"
-    if not train_py.is_file():
-        raise FileNotFoundError(f"Flux training script not found: {train_py}")
     sh.write_text(
         f"""#!/usr/bin/env bash
 accelerate launch \
   --mixed_precision bf16 \
-  {train_py} \
-  --pretrained_model_name_or_path models/unet/flux1-dev-fp8.safetensors \
-  --clip_l  models/clip/clip_l.safetensors \
-  --t5xxl   models/clip/t5xxl_fp8.safetensors \
-  --ae      models/vae/ae.sft \
+  /content/fluxgym/sd-scripts/flux_train_network.py \
+  --pretrained_model_name_or_path /content/fluxgym/models/unet/flux1-dev-fp8.safetensors \
+  --clip_l  /content/fluxgym/models/clip/clip_l.safetensors \
+  --t5xxl   /content/fluxgym/models/clip/t5xxl_fp8.safetensors \
+  --ae      /content/fluxgym/models/vae/ae.sft \
   --cache_latents_to_disk --save_model_as safetensors \
   --network_module networks.lora_flux --network_dim {NETWORK_DIM} \
   --optimizer_type {OPTIMIZER_TYPE} \
@@ -158,5 +155,6 @@ accelerate launch \
 if __name__ == "__main__":
     prepare_dataset()
     build_train_sh()
-    # subprocess.run(["bash", "train.sh"], check=True)
     print("\nNext step: ./train.sh")
+    #subprocess.run(["bash", "train.sh"], check=True)
+    
