@@ -142,11 +142,14 @@ def tag_with_wd14(img_paths, trigger: str, min_prob: float = 0.35) -> None:
 
 def build_train_sh(args: argparse.Namespace) -> None:
     sh = Path("train.sh")
+    train_py = Path(__file__).resolve().parent / "sd-scripts" / "flux_train_network.py"
+    if not train_py.is_file():
+        raise FileNotFoundError(f"Flux training script not found: {train_py}")
     sh.write_text(
         f"""#!/usr/bin/env bash
 accelerate launch \
   --mixed_precision bf16 \
-  ../sd-scripts/flux_train_network.py \
+  {train_py} \
   --pretrained_model_name_or_path models/unet/flux1-dev-fp8.safetensors \
   --clip_l  models/clip/clip_l.safetensors \
   --t5xxl   models/clip/t5xxl_fp8.safetensors \
